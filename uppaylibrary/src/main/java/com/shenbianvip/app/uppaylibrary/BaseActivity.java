@@ -1,11 +1,5 @@
 package com.shenbianvip.app.uppaylibrary;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import org.json.JSONException;
-import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -21,8 +15,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public abstract class BaseActivity extends Activity implements Callback,
-        Runnable {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
+public abstract class BaseActivity extends Activity implements Callback, Runnable {
+
     public static final String LOG_TAG = "PayDemo";
     private Context mContext = null;
     private int mGoodsIdx = 0;
@@ -39,7 +41,7 @@ public abstract class BaseActivity extends Activity implements Callback,
     private final String mMode = "01";
     private static final String TN_URL_01 = "http://101.231.204.84:8091/sim/getacptn";
 
-    private final View.OnClickListener mClickListener = new View.OnClickListener() {
+    public final View.OnClickListener mClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Log.e(LOG_TAG, " " + v.getTag());
@@ -57,24 +59,13 @@ public abstract class BaseActivity extends Activity implements Callback,
         }
     };
 
-    public abstract void doStartUnionPayPlugin(Activity activity, String tn,
-            String mode);
+    public abstract void doStartUnionPayPlugin(Activity activity, String tn, String mode);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
         mHandler = new Handler(this);
-
-        setContentView(R.layout.activity_main);
-
-        Button btn0 = (Button) findViewById(R.id.btn0);
-        btn0.setTag(0);
-        btn0.setOnClickListener(mClickListener);
-
-        TextView tv = (TextView) findViewById(R.id.guide);
-        tv.setTextSize(16);
-        updateTextView(tv);
     }
 
     public abstract void updateTextView(TextView tv);
@@ -206,7 +197,6 @@ public abstract class BaseActivity extends Activity implements Callback,
     private boolean verify(String msg, String sign64, String mode) {
         // 此处的verify，商户需送去商户后台做验签
         return true;
-
     }
 
 }
